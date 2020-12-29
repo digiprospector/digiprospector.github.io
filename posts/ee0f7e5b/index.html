@@ -17,18 +17,18 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"digiprospector.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="client device的driver如何使用pinctrl我们前面说到,一个pin可能会被复用,这个pin可能是当做某一个device的一个pin,比如当成UART里的RX pin,这种device称为client device,或者当成是一个GPIO pin. 这篇blog的目的是看看client device driver会如何使用pinctrl提供的API的.  什么样的device是c">
+  <meta name="description" content="client device的driver如何使用pinctrl我们前面说到,一个pin可能会被复用,这个pin可能是当做某一个device的一个pin,比如当成UART里的RX pin,这种device称为client device,或者当成是一个GPIO pin. 这篇blog的目的是看看client device driver会如何使用pinctrl提供的API的.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pinctrl初探 (二)">
-<meta property="og:url" content="http://example.com/2020/12/24/Pinctrl%E5%88%9D%E6%8E%A22/index.html">
+<meta property="og:url" content="https://digiprospector.github.io/posts/ee0f7e5b/index.html">
 <meta property="og:site_name" content="随堂小记">
-<meta property="og:description" content="client device的driver如何使用pinctrl我们前面说到,一个pin可能会被复用,这个pin可能是当做某一个device的一个pin,比如当成UART里的RX pin,这种device称为client device,或者当成是一个GPIO pin. 这篇blog的目的是看看client device driver会如何使用pinctrl提供的API的.  什么样的device是c">
+<meta property="og:description" content="client device的driver如何使用pinctrl我们前面说到,一个pin可能会被复用,这个pin可能是当做某一个device的一个pin,比如当成UART里的RX pin,这种device称为client device,或者当成是一个GPIO pin. 这篇blog的目的是看看client device driver会如何使用pinctrl提供的API的.">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-12-24T06:17:52.000Z">
-<meta property="article:modified_time" content="2020-12-24T06:47:57.963Z">
+<meta property="article:modified_time" content="2020-12-29T03:15:38.465Z">
 <meta property="article:author" content="桌上阳光">
 <meta property="article:tag" content="pinctrl">
 <meta property="article:tag" content="x86">
@@ -36,7 +36,7 @@
 <meta property="article:tag" content="driver">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2020/12/24/Pinctrl%E5%88%9D%E6%8E%A22/">
+<link rel="canonical" href="https://digiprospector.github.io/posts/ee0f7e5b/">
 
 
 <script id="page-configurations">
@@ -154,7 +154,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/24/Pinctrl%E5%88%9D%E6%8E%A22/">
+    <link itemprop="mainEntityOfPage" href="https://digiprospector.github.io/posts/ee0f7e5b/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -176,10 +176,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-12-24 14:17:52 / 修改时间：14:47:57" itemprop="dateCreated datePublished" datetime="2020-12-24T14:17:52+08:00">2020-12-24</time>
+              <time title="创建时间：2020-12-24 14:17:52" itemprop="dateCreated datePublished" datetime="2020-12-24T14:17:52+08:00">2020-12-24</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-29 11:15:38" itemprop="dateModified" datetime="2020-12-29T11:15:38+08:00">2020-12-29</time>
+              </span>
 
           
 
@@ -194,6 +200,8 @@
       
         <h2 id="client-device的driver如何使用pinctrl"><a href="#client-device的driver如何使用pinctrl" class="headerlink" title="client device的driver如何使用pinctrl"></a>client device的driver如何使用pinctrl</h2><p>我们前面说到,一个pin可能会被复用,这个pin可能是当做某一个device的一个pin,比如当成UART里的RX pin,这种device称为client device,或者当成是一个GPIO pin.</p>
 <p>这篇blog的目的是看看client device driver会如何使用pinctrl提供的API的. </p>
+<a id="more"></a>
+
 <h2 id="什么样的device是client-device"><a href="#什么样的device是client-device" class="headerlink" title="什么样的device是client device?"></a>什么样的device是client device?</h2><p>当一个device需要用到被pinctrl控制的pin的时候,他的driver会调用到pinctrl. 这个device叫client device.</p>
 <p>那么什么样的device是client device?答案是在dtb里定义好的.</p>
 <p>在dtb里的device的部分会有pinctrl的部分,表示这个device会用到一些pinctrl管理的一些pin, 而pinctrl的部分详细的描述了这些pin的配置.</p>
@@ -229,10 +237,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/12/23/Pinctrl%E5%88%9D%E6%8E%A2/" rel="prev" title="Pinctrl初探 (一)">
+    <a href="/posts/413ee539/" rel="prev" title="Pinctrl初探 (一)">
       <i class="fa fa-chevron-left"></i> Pinctrl初探 (一)
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/posts/94f21a85/" rel="next" title="用vnc在linux server上运行vscode用来看kernel代码">
+      用vnc在linux server上运行vscode用来看kernel代码 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -306,7 +317,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -317,7 +328,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -346,7 +357,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-sun"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">桌上阳光</span>
 </div>
@@ -415,7 +426,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'blog-comment',
       owner       : 'digiprospector',
       admin       : ['digiprospector'],
-      id          : '088231a646b85c9bd2da70d47372a1e6',
+      id          : '9df982d343f52b8ad2327967222b15af',
         language: 'zh-CN',
       distractionFreeMode: true
     });

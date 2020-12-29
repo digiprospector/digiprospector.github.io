@@ -17,18 +17,18 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"digiprospector.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta property="og:type" content="website">
 <meta property="og:title" content="随堂小记">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="https://digiprospector.github.io/index.html">
 <meta property="og:site_name" content="随堂小记">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="桌上阳光">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="https://digiprospector.github.io/">
 
 
 <script id="page-configurations">
@@ -145,7 +145,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/24/Pinctrl%E5%88%9D%E6%8E%A22/">
+    <link itemprop="mainEntityOfPage" href="https://digiprospector.github.io/posts/94f21a85/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -159,7 +159,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/12/24/Pinctrl%E5%88%9D%E6%8E%A22/" class="post-title-link" itemprop="url">Pinctrl初探 (二)</a>
+            <a href="/posts/94f21a85/" class="post-title-link" itemprop="url">用vnc在linux server上运行vscode用来看kernel代码</a>
         </h2>
 
         <div class="post-meta">
@@ -168,10 +168,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-12-24 14:17:52 / 修改时间：14:47:57" itemprop="dateCreated datePublished" datetime="2020-12-24T14:17:52+08:00">2020-12-24</time>
+              <time title="创建时间：2020-12-28 10:59:26" itemprop="dateCreated datePublished" datetime="2020-12-28T10:59:26+08:00">2020-12-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-29 11:16:39" itemprop="dateModified" datetime="2020-12-29T11:16:39+08:00">2020-12-29</time>
+              </span>
 
           
 
@@ -184,23 +190,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="client-device的driver如何使用pinctrl"><a href="#client-device的driver如何使用pinctrl" class="headerlink" title="client device的driver如何使用pinctrl"></a>client device的driver如何使用pinctrl</h2><p>我们前面说到,一个pin可能会被复用,这个pin可能是当做某一个device的一个pin,比如当成UART里的RX pin,这种device称为client device,或者当成是一个GPIO pin.</p>
-<p>这篇blog的目的是看看client device driver会如何使用pinctrl提供的API的. </p>
-<h2 id="什么样的device是client-device"><a href="#什么样的device是client-device" class="headerlink" title="什么样的device是client device?"></a>什么样的device是client device?</h2><p>当一个device需要用到被pinctrl控制的pin的时候,他的driver会调用到pinctrl. 这个device叫client device.</p>
-<p>那么什么样的device是client device?答案是在dtb里定义好的.</p>
-<p>在dtb里的device的部分会有pinctrl的部分,表示这个device会用到一些pinctrl管理的一些pin, 而pinctrl的部分详细的描述了这些pin的配置.</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">deviced的部分</span></span><br><span class="line">device-node-name&#123;</span><br><span class="line">   定义该device自己的属性</span><br><span class="line">   ...</span><br><span class="line">   pinctrl-names= &quot;sleep&quot;,&quot;default&quot;,&quot;idle&quot;;</span><br><span class="line">   pinctrl-0 = &amp;xxx_State_sleep; #引用了pinctrl里的定义</span><br><span class="line">   pinctrl-1 = &amp;xxx_state_default; #引用了pinctrl里的定义</span><br><span class="line">   pinctrl-2 = &amp;xxx_state_idle; #引用了pinctrl里的定义</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">pinctrl@e01b0000&#123;</span><br><span class="line">    pinctrl-names = &quot;default&quot;;</span><br><span class="line">    pinctrl-0 = &lt;&amp;state_default&gt;;</span><br><span class="line"> </span><br><span class="line">    state_default:pinctrl_default&#123;</span><br><span class="line">    &#125;;</span><br><span class="line">    </span><br><span class="line">    xxx_state_sleep:xxx_sleep&#123;</span><br><span class="line">      xxx_mfp&#123;</span><br><span class="line">        actions,groups = &quot;fmp1_3_1spi0_ss&quot;,&quot;mfp1_3_1_spi0_miso&quot;,&quot;mfp1_5_4&quot;;</span><br><span class="line">        actions,function = &quot;spi0&quot;;</span><br><span class="line">      &#125;;</span><br><span class="line">   &#125;;</span><br></pre></td></tr></table></figure>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012830148/article/details/80609337%E9%87%8C%E6%9C%89%E4%B8%8B%E9%9D%A2%E8%BF%99%E5%8F%A5">https://blog.csdn.net/u012830148/article/details/80609337里有下面这句</a></p>
-<p>Pinctrl子系统在加载时，会调用pinctrl_dt_to_map函数将dts文件中有关pinctrl的配置项解析出来，并根据dts各驱动节点对pinctrl的引用关系，将phandle挂到各个驱动的device tree子节点，各个驱动就可以通过自己的dev句柄获得pinctrl的配置了</p>
-<h2 id="device-driver如何使用pinctrl"><a href="#device-driver如何使用pinctrl" class="headerlink" title="device driver如何使用pinctrl"></a>device driver如何使用pinctrl</h2><p>在driver里的probe的时候,可以调用devm_pinctrl_get(dev)得到pinctrl</p>
-<p>得到了pinctrl就可以操作pin了</p>
-<p>这driver release的时候需要调用devm_pinctrl_put来释放资源</p>
-<h2 id="未知细节"><a href="#未知细节" class="headerlink" title="未知细节"></a>未知细节</h2><p>还有一些pin的细节,只知道概念,暂时不会去研究,记录一下.</p>
-<p><code>pin config</code>, <code>pin state</code>, <code>pin setting</code></p>
-<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><h3 id="1-不同的device得到的pinctrl是相同的吗-从代码看起来是不同的-如果这样的话不同的device的到的pinctrl和pin-controller-例如denverton的pinctrl-有什么关系"><a href="#1-不同的device得到的pinctrl是相同的吗-从代码看起来是不同的-如果这样的话不同的device的到的pinctrl和pin-controller-例如denverton的pinctrl-有什么关系" class="headerlink" title="1. 不同的device得到的pinctrl是相同的吗?从代码看起来是不同的.如果这样的话不同的device的到的pinctrl和pin controller(例如denverton的pinctrl)有什么关系?"></a>1. 不同的device得到的pinctrl是相同的吗?从代码看起来是不同的.如果这样的话不同的device的到的pinctrl和pin controller(例如denverton的pinctrl)有什么关系?</h3><h3 id="2-x86没有用到dtb-而是用的BIOS-如何定义某个device使用了pinctrl"><a href="#2-x86没有用到dtb-而是用的BIOS-如何定义某个device使用了pinctrl" class="headerlink" title="2. x86没有用到dtb,而是用的BIOS. 如何定义某个device使用了pinctrl"></a>2. x86没有用到dtb,而是用的BIOS. 如何定义某个device使用了pinctrl</h3><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="http://www.wowotech.net/sort/gpio_subsystem">http://www.wowotech.net/sort/gpio_subsystem</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u012830148/article/details/80609337">https://blog.csdn.net/u012830148/article/details/80609337</a></p>
-
+          <h2 id="vscode看kernel-code"><a href="#vscode看kernel-code" class="headerlink" title="vscode看kernel code"></a>vscode看kernel code</h2><p>vscode最近在IDE里非常流行，因为它有着很强大的插件功能。linux kernel里的function的定义十分复杂，很多的code用macro来控制，导致source insight对kernel的code的解析还是不够的。</p>
+<p>最近了解到vscode+clang用来看kernel code比较合适，于是作了一下尝试。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/94f21a85/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -219,7 +218,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/23/Pinctrl%E5%88%9D%E6%8E%A2/">
+    <link itemprop="mainEntityOfPage" href="https://digiprospector.github.io/posts/ee0f7e5b/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -233,7 +232,80 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/12/23/Pinctrl%E5%88%9D%E6%8E%A2/" class="post-title-link" itemprop="url">Pinctrl初探 (一)</a>
+            <a href="/posts/ee0f7e5b/" class="post-title-link" itemprop="url">Pinctrl初探 (二)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-24 14:17:52" itemprop="dateCreated datePublished" datetime="2020-12-24T14:17:52+08:00">2020-12-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-29 11:15:38" itemprop="dateModified" datetime="2020-12-29T11:15:38+08:00">2020-12-29</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="client-device的driver如何使用pinctrl"><a href="#client-device的driver如何使用pinctrl" class="headerlink" title="client device的driver如何使用pinctrl"></a>client device的driver如何使用pinctrl</h2><p>我们前面说到,一个pin可能会被复用,这个pin可能是当做某一个device的一个pin,比如当成UART里的RX pin,这种device称为client device,或者当成是一个GPIO pin.</p>
+<p>这篇blog的目的是看看client device driver会如何使用pinctrl提供的API的. </p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/ee0f7e5b/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://digiprospector.github.io/posts/413ee539/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="桌上阳光">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随堂小记">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/posts/413ee539/" class="post-title-link" itemprop="url">Pinctrl初探 (一)</a>
         </h2>
 
         <div class="post-meta">
@@ -250,7 +322,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-24 13:28:31" itemprop="dateModified" datetime="2020-12-24T13:28:31+08:00">2020-12-24</time>
+                <time title="修改时间：2020-12-29 11:15:33" itemprop="dateModified" datetime="2020-12-29T11:15:33+08:00">2020-12-29</time>
               </span>
 
           
@@ -265,27 +337,14 @@
 
       
           <h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>这篇blog从比较宏观的角度来说明linux里的pinctrl的作用,不涉及代码细节.</p>
-<h2 id="什么是pin-controller"><a href="#什么是pin-controller" class="headerlink" title="什么是pin controller"></a>什么是pin controller</h2><p>pin controller是SOC上的一个硬件设备,用于控制CPU上的一些pin脚的功能,这些功能包括了GPIO的定义,比如上拉,下拉,open drain</p>
-<p>还有把一些pin定义成一个group,实现一个接口,比如I2C接口需要4个pin,或者MMC接口</p>
-<h2 id="什么是pinctrl"><a href="#什么是pinctrl" class="headerlink" title="什么是pinctrl"></a>什么是pinctrl</h2><p>pinctrl是linux kernel里的pin controller的抽象,目的是消除不同的SOC的pin的定义的差别,对上层提供统一的接口.</p>
-<h2 id="pinctrl里有什么"><a href="#pinctrl里有什么" class="headerlink" title="pinctrl里有什么?"></a>pinctrl里有什么?</h2><p>有N个pin, 从0到maxpin.需要主要的是一个system里可能会有多个pinctrl,因此pin number的number space只在当前pinctrl.</p>
-<p>和对这N个pin的操作函数.</p>
-<h2 id="Denverton的pin-controller有些什么功能"><a href="#Denverton的pin-controller有些什么功能" class="headerlink" title="Denverton的pin controller有些什么功能?"></a>Denverton的pin controller有些什么功能?</h2><p>Denverton的datasheet里的第26章和65章是关于GPIO PIN的register的描述.</p>
-<p>下面这张图说明了GPIO的逻辑,可以通过一些register的设定来修改pad的行为,可以改成Input, Output, Input的时候触发什么样的Interrupt等.</p>
-<p><img src="/2020/12/23/Pinctrl初探\Snipaste_2020-12-23_13-39-46.png" alt="Snipaste_2020-12-23_13-39-46"></p>
-<h2 id="Denverton的pinctrl代码"><a href="#Denverton的pinctrl代码" class="headerlink" title="Denverton的pinctrl代码"></a>Denverton的pinctrl代码</h2><p>Denverton的pinctrl就是把上面的逻辑图的配置,用软件实现,然后开放接口给上层软件使用,让上层软件可以修改pin的行为.</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义了154个pin,并且给每个pin一个名字,这个名字和datasheet里的是对应的</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_pin_desc</span> <span class="title">dnv_pins</span>[] =</span> &#123;</span><br><span class="line">    <span class="comment">/* North ALL */</span></span><br><span class="line">    PINCTRL_PIN(<span class="number">0</span>, <span class="string">&quot;GBE0_SDP0&quot;</span>),</span><br><span class="line">    PINCTRL_PIN(<span class="number">1</span>, <span class="string">&quot;GBE1_SDP0&quot;</span>),</span><br><span class="line">    PINCTRL_PIN(<span class="number">2</span>, <span class="string">&quot;GBE0_SDP1&quot;</span>),</span><br><span class="line">    PINCTRL_PIN(<span class="number">3</span>, <span class="string">&quot;GBE1_SDP1&quot;</span>),</span><br><span class="line">...</span><br><span class="line">    PINCTRL_PIN(<span class="number">150</span>, <span class="string">&quot;EMMC_D5&quot;</span>),</span><br><span class="line">    PINCTRL_PIN(<span class="number">151</span>, <span class="string">&quot;EMMC_D6&quot;</span>),</span><br><span class="line">    PINCTRL_PIN(<span class="number">152</span>, <span class="string">&quot;EMMC_D7&quot;</span>),</span><br><span class="line">    PINCTRL_PIN(<span class="number">153</span>, <span class="string">&quot;GPIO_3&quot;</span>),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义了几个组,分别组成了uart和emmc的pin</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> dnv_uart0_pins[] = &#123; <span class="number">60</span>, <span class="number">61</span>, <span class="number">64</span>, <span class="number">65</span> &#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> dnv_uart0_modes[] = &#123; <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span> &#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> dnv_uart1_pins[] = &#123; <span class="number">94</span>, <span class="number">95</span>, <span class="number">96</span>, <span class="number">97</span> &#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> dnv_uart2_pins[] = &#123; <span class="number">60</span>, <span class="number">61</span>, <span class="number">62</span>, <span class="number">63</span> &#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> dnv_uart2_modes[] = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span> &#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> dnv_emmc_pins[] = &#123;</span><br><span class="line">    <span class="number">142</span>, <span class="number">143</span>, <span class="number">144</span>, <span class="number">145</span>, <span class="number">146</span>, <span class="number">147</span>, <span class="number">148</span>, <span class="number">149</span>, <span class="number">150</span>, <span class="number">151</span>, <span class="number">152</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">intel_padgroup</span> <span class="title">dnv_north_gpps</span>[] =</span> &#123;</span><br><span class="line">    DNV_GPP(<span class="number">0</span>, <span class="number">0</span>, <span class="number">31</span>),  <span class="comment">/* North ALL_0 */</span></span><br><span class="line">    DNV_GPP(<span class="number">1</span>, <span class="number">32</span>, <span class="number">40</span>), <span class="comment">/* North ALL_1 */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">intel_padgroup</span> <span class="title">dnv_south_gpps</span>[] =</span> &#123;</span><br><span class="line">    DNV_GPP(<span class="number">0</span>, <span class="number">41</span>, <span class="number">58</span>), <span class="comment">/* South DFX */</span></span><br><span class="line">    DNV_GPP(<span class="number">1</span>, <span class="number">59</span>, <span class="number">90</span>), <span class="comment">/* South GPP0_0 */</span></span><br><span class="line">    DNV_GPP(<span class="number">2</span>, <span class="number">91</span>, <span class="number">111</span>),    <span class="comment">/* South GPP0_1 */</span></span><br><span class="line">    DNV_GPP(<span class="number">3</span>, <span class="number">112</span>, <span class="number">143</span>),   <span class="comment">/* South GPP1_0 */</span></span><br><span class="line">    DNV_GPP(<span class="number">4</span>, <span class="number">144</span>, <span class="number">153</span>),   <span class="comment">/* South GPP1_1 */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义了两个communities,我们看到上面的PIN是从0顺着下来的,这里为什么要分成communities</span></span><br><span class="line"><span class="comment">//community下面还有group?</span></span><br><span class="line"><span class="comment">//理由是按register来区分的,不同的community的register的base address不同</span></span><br><span class="line"><span class="comment">//不同的group的offset不同</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">intel_community</span> <span class="title">dnv_communities</span>[] =</span> &#123;</span><br><span class="line">    DNV_COMMUNITY(<span class="number">0</span>, <span class="number">0</span>, <span class="number">40</span>, dnv_north_gpps),</span><br><span class="line">    DNV_COMMUNITY(<span class="number">1</span>, <span class="number">41</span>, <span class="number">153</span>, dnv_south_gpps),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义了一个soc data,是intel pinctrl私有的,包含了所有的pin, </span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">intel_pinctrl_soc_data</span> <span class="title">dnv_soc_data</span> =</span> &#123;</span><br><span class="line">    .pins = dnv_pins,</span><br><span class="line">    .npins = ARRAY_SIZE(dnv_pins),</span><br><span class="line">    .groups = dnv_groups,</span><br><span class="line">    .ngroups = ARRAY_SIZE(dnv_groups),</span><br><span class="line">    .functions = dnv_functions,</span><br><span class="line">    .nfunctions = ARRAY_SIZE(dnv_functions),</span><br><span class="line">    .communities = dnv_communities,</span><br><span class="line">    .ncommunities = ARRAY_SIZE(dnv_communities),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果acpi里的pinctrl的名字匹配,就用这个driver</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">acpi_device_id</span> <span class="title">dnv_pinctrl_acpi_match</span>[] =</span> &#123;</span><br><span class="line">    &#123; <span class="string">&quot;INTC3000&quot;</span> &#125;,</span><br><span class="line">    &#123; &#125;</span><br><span class="line">&#125;;</span><br><span class="line">MODULE_DEVICE_TABLE(acpi, dnv_pinctrl_acpi_match);</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用的intel通用的intel_pinctrl</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">dnv_pinctrl_probe</span><span class="params">(struct platform_device *pdev)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> intel_pinctrl_probe(pdev, &amp;dnv_soc_data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">platform_driver</span> <span class="title">dnv_pinctrl_driver</span> =</span> &#123;</span><br><span class="line">    .probe = dnv_pinctrl_probe,</span><br><span class="line">    .driver = &#123;</span><br><span class="line">        .name = <span class="string">&quot;denverton-pinctrl&quot;</span>,</span><br><span class="line">        .acpi_match_table = dnv_pinctrl_acpi_match,</span><br><span class="line">        .pm = &amp;dnv_pinctrl_pm_ops,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="pinctl提供了什么"><a href="#pinctl提供了什么" class="headerlink" title="pinctl提供了什么?"></a>pinctl提供了什么?</h2><ol>
-<li>提供了一个GPIO chip,一个irq chip和irqdomain这个是kernel里别的driver使用的</li>
-<li>/sys/kernel/debug/pinctrl/下会提供一个接口,可以看到所有的pin的状态</li>
-</ol>
-<p>denverton的显示如下,后面两个是pin的cfg register的值,在datasheet里叫做pad configuration DW0和pad configuration DW1</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">registered pins: 154</span><br><span class="line">pin 0 (GBE0_SDP0) GPIO 0x05000100 0x00000018</span><br><span class="line">pin 1 (GBE1_SDP0) mode 1 0x05800600 0x00000019</span><br><span class="line">pin 2 (GBE0_SDP1) GPIO 0x45000102 0x0000001a</span><br><span class="line">pin 3 (GBE1_SDP1) mode 2 0x05000a00 0x0000001b</span><br><span class="line">...</span><br><span class="line">pin 150 (EMMC_D5) mode 1 0x45000702 0x0000304f</span><br><span class="line">pin 151 (EMMC_D6) mode 1 0x45000702 0x00003050</span><br><span class="line">pin 152 (EMMC_D7) mode 1 0x45000702 0x00003051</span><br><span class="line">pin 153 (GPIO_3) GPIO 0x45000101 0x00000052</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>denverton datasheet <a target="_blank" rel="noopener" href="https://kr.mouser.com/datasheet/2/612/c3000-family-datasheet-1623704.pdf">https://kr.mouser.com/datasheet/2/612/c3000-family-datasheet-1623704.pdf</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/413ee539/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -304,7 +363,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/21/%E5%A6%82%E4%BD%95%E7%94%A8hexo%E5%92%8Cgit%E5%BB%BA%E7%AB%8B%E4%B8%80%E4%B8%AAblog/">
+    <link itemprop="mainEntityOfPage" href="https://digiprospector.github.io/posts/1e5de19/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -318,7 +377,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/12/21/%E5%A6%82%E4%BD%95%E7%94%A8hexo%E5%92%8Cgit%E5%BB%BA%E7%AB%8B%E4%B8%80%E4%B8%AAblog/" class="post-title-link" itemprop="url">如何用hexo和github建立一个blog</a>
+            <a href="/posts/1e5de19/" class="post-title-link" itemprop="url">如何用hexo和github建立一个blog</a>
         </h2>
 
         <div class="post-meta">
@@ -335,7 +394,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-24 13:54:07" itemprop="dateModified" datetime="2020-12-24T13:54:07+08:00">2020-12-24</time>
+                <time title="修改时间：2020-12-29 11:15:49" itemprop="dateModified" datetime="2020-12-29T11:15:49+08:00">2020-12-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -359,182 +418,14 @@
 
       
           <h2 id="1-目的"><a href="#1-目的" class="headerlink" title="1. 目的"></a>1. 目的</h2><p>本文的目的是在github上建立一个blog;使用typora来编辑markdown格式的内容;使用了hexo工具来生成html文件.</p>
-<h2 id="2-github"><a href="#2-github" class="headerlink" title="2. github"></a>2. github</h2><p>github page(<a target="_blank" rel="noopener" href="https://pages.github.com/">https://pages.github.com/</a>) 是用来给你的project写website的一个功能,我们用它来存放我们的blog.</p>
-<h2 id="2-1-注册github"><a href="#2-1-注册github" class="headerlink" title="2.1 注册github"></a>2.1 注册github</h2><p>这个不用多说了,直接去 <a target="_blank" rel="noopener" href="http://www.github.com/">www.github.com</a> 注册一个.</p>
-<h3 id="2-2-新增一个github-page的repository"><a href="#2-2-新增一个github-page的repository" class="headerlink" title="2.2 新增一个github page的repository"></a>2.2 新增一个github page的repository</h3><p>左上角的New,新增一个新的repository</p>
-<p><img src="/2020/12/21/如何用hexo和git建立一个blog\Snipaste_2020-12-21_13-38-02.png" alt="新增repository"></p>
-<p>repository name输入&lt;你的github用户名&gt;.github.io</p>
-<p><img src="/2020/12/21/如何用hexo和git建立一个blog\Snipaste_2020-12-21_16-07-26.png" alt="Snipaste_2020-12-21_16-07-26"></p>
-<p>点开这个repository,在setting里面可以找到github pages的选项</p>
-<p><img src="/2020/12/21/如何用hexo和git建立一个blog\Snipaste_2020-12-21_16-14-12.png" alt="Snipaste_2020-12-21_16-14-12"></p>
-<p>在这里可以选择Theme</p>
-<p><img src="/2020/12/21/如何用hexo和git建立一个blog\Snipaste_2020-12-21_16-14-33.png" alt="Snipaste_2020-12-21_16-14-33"></p>
-<h2 id="安装git和hexo"><a href="#安装git和hexo" class="headerlink" title="安装git和hexo"></a>安装git和hexo</h2><p>我使用的是windows平台,blog的内容放在d:\blog下.先创建好这个目录.</p>
-<h3 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h3><p>下载windows下的git,并安装<a target="_blank" rel="noopener" href="https://git-scm.com/download/win">https://git-scm.com/download/win</a></p>
-<h3 id="配置git"><a href="#配置git" class="headerlink" title="配置git"></a>配置git</h3><p>我们使用ssh key的方式链接github,所以要做一些配置.</p>
-<p>在d:\blog里点邮件,选择git bash here,打开git bash</p>
-<p>配置用户名和邮箱</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;digiprospector&quot;</span><br><span class="line">git config --global user.email &quot;digiprospector@protonmail.com&quot;</span><br></pre></td></tr></table></figure>
-<p>先生成key pairs</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;digiprospector@protonmail.com&quot;</span><br><span class="line">cat ~/.ssh/id_rsa.pub #输出的是公钥,把内容复制到剪切板</span><br></pre></td></tr></table></figure>
-<p>在github里的setting-&gt;”SSH and GPG keys”,右上角的”New SSH key”, 把刚才生成的公钥帖进去.</p>
-<p><img src="/2020/12/21/如何用hexo和git建立一个blog\Snipaste_2020-12-21_16-52-03.png" alt="Snipaste_2020-12-21_16-52-03"></p>
-<h3 id="安装node-js"><a href="#安装node-js" class="headerlink" title="安装node.js"></a>安装node.js</h3><p>下载node.js,并安装. <a target="_blank" rel="noopener" href="https://nodejs.org/en/">https://nodejs.org/en/</a></p>
-<p>用下面的命令改成国内的阿里的镜像.</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-<h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm i hexo-cli -g</span><br><span class="line">hexo init</span><br><span class="line">npm install</span><br><span class="line">npm i hexo-deployer-git</span><br></pre></td></tr></table></figure>
-<h3 id="安装hexo的插件-使得用typora插入的图片-生成的html也可以使用"><a href="#安装hexo的插件-使得用typora插入的图片-生成的html也可以使用" class="headerlink" title="安装hexo的插件,使得用typora插入的图片,生成的html也可以使用"></a>安装hexo的插件,使得用typora插入的图片,生成的html也可以使用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure>
-<p>修改D:\blogs\node_modules\hexo-asset-image\index.js</p>
-<p>这里稍微解释以下link得到的是”/2020/12/21/“这个字符串; src得到的是”如何用hexo和git建立一个blog\Snipaste_2020-12-21_13-38-02.png”,这样的字符串.</p>
-<p>最后生成了图片的绝对地址.</p>
-<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@@ -21,7 +21,7 @@</span></span><br><span class="line">       var endPos = link.lastIndexOf(&#x27;/&#x27;);</span><br><span class="line">     &#125;</span><br><span class="line">     else &#123;</span><br><span class="line"><span class="deletion">-      var endPos = link.length-1;</span></span><br><span class="line"><span class="addition">+      var endPos = link.lastIndexOf(&#x27;/&#x27;, link.lastIndexOf(&#x27;/&#x27;) - 1);</span></span><br><span class="line">     &#125;</span><br><span class="line">     link = link.substring(beginPos, endPos) + &#x27;/&#x27; + appendLink;</span><br><span class="line"></span><br><span class="line"><span class="meta">@@ -40,6 +40,7 @@</span></span><br><span class="line">         if ($(this).attr(&#x27;src&#x27;))&#123;</span><br><span class="line">           // For windows style path, we replace &#x27;\&#x27; to &#x27;/&#x27;.</span><br><span class="line">           var src = $(this).attr(&#x27;src&#x27;).replace(&#x27;\\&#x27;, &#x27;/&#x27;);</span><br><span class="line"><span class="addition">+          src = src.substring(&quot;D:\\blogs\\source\\_posts\\&quot;.length - 1)</span></span><br><span class="line">           if(!(/http[s]*.*|\/\/.*/.test(src)</span><br><span class="line">             || /^\s+\//.test(src)</span><br><span class="line">             || /^\s*\/uploads|images\//.test(src))) &#123;</span><br></pre></td></tr></table></figure>
-<h3 id="配置hexo"><a href="#配置hexo" class="headerlink" title="配置hexo"></a>配置hexo</h3><h3 id="建立tags和categories目录"><a href="#建立tags和categories目录" class="headerlink" title="建立tags和categories目录"></a>建立tags和categories目录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo new page tags</span><br><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure>
-<p>编辑D:\blogs\source\tags\index.md,增加两行</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: tags</span><br><span class="line">date: 2020-12-24 13:39:39</span><br><span class="line">type: &quot;tags&quot;</span><br><span class="line">layout: &quot;tags&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<p>编辑D:\blogs\source\categories\index.md,增加两行</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: categories</span><br><span class="line">date: 2020-12-24 13:39:39</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">layout: &quot;categories&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<h3 id="下载next-theme"><a href="#下载next-theme" class="headerlink" title="下载next theme"></a>下载next theme</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
-<p>修改D:\blogs\themes\next_config.yml，里的Schemes部分，我改成了Gemini</p>
-<h3 id="打开了gitalk的评论"><a href="#打开了gitalk的评论" class="headerlink" title="打开了gitalk的评论"></a>打开了gitalk的评论</h3><p>gitalk需要在github上打开oauth</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/settings/applications/new%EF%BC%8C%E5%A1%AB%E5%86%99%E5%A6%82%E4%B8%8B%E5%86%85%E5%AE%B9%EF%BC%8C%E5%BE%97%E5%88%B0client_id%E5%92%8Cclient_secret%E5%9C%A8gitalk%E9%87%8C%E7%94%A8%E5%88%B0">https://github.com/settings/applications/new，填写如下内容，得到client_id和client_secret在gitalk里用到</a></p>
-<p><img src="/2020/12/21/如何用hexo和git建立一个blog\Snipaste_2020-12-23_15-22-58.png" alt="Snipaste_2020-12-23_15-22-58"></p>
-<p>这里我开了一个新的repository来放issue，也就是comments，不知道用blog本身的是不是可以。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">scheme:</span> <span class="string">Gemini</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#还打开了gitalk的评论</span></span><br><span class="line"><span class="comment"># Gitalk</span></span><br><span class="line"><span class="comment"># For more information: https://gitalk.github.io, https://github.com/gitalk/gitalk</span></span><br><span class="line"><span class="attr">gitalk:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="string">ture</span></span><br><span class="line">  <span class="attr">github_id:</span> <span class="string">digiprospector</span> <span class="comment"># GitHub repo owner</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">blog-comment</span> <span class="comment"># Repository name to store issues</span></span><br><span class="line">  <span class="attr">client_id:</span> <span class="string">xxxxxxxxxxxxxxxxxxxxxx</span> <span class="comment"># GitHub Application Client ID</span></span><br><span class="line">  <span class="attr">client_secret:</span> <span class="string">xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span>  <span class="comment"># GitHub Application Client Secret</span></span><br><span class="line">  <span class="attr">admin_user:</span> <span class="string">digiprospector</span> <span class="comment"># GitHub repo owner and collaborators, only these guys can initialize gitHub issues</span></span><br><span class="line">  <span class="attr">distraction_free_mode:</span> <span class="literal">true</span> <span class="comment"># Facebook-like distraction free mode</span></span><br><span class="line">  <span class="comment"># Gitalk&#x27;s display language depends on user&#x27;s browser or system environment</span></span><br><span class="line">  <span class="comment"># If you want everyone visiting your site to see a uniform language, you can set a force language value</span></span><br><span class="line">  <span class="comment"># Available values: en | es-ES | fr | ru | zh-CN | zh-TW</span></span><br><span class="line">  <span class="attr">language:</span> <span class="string">zh-CN</span></span><br></pre></td></tr></table></figure>
-<p>修改D:\blogs\_config.yml</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#post_asset_folder改成true,这样hexo new的时候会同时生成一个目录,把需要的图片都放到这个目录下面</span></span><br><span class="line"><span class="attr">post_asset_folder:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#主题改成next</span></span><br><span class="line"><span class="attr">theme:</span> <span class="string">next</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#最后几行,改成下面这样</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">&#x27;git&#x27;</span></span><br><span class="line">  <span class="attr">repository:</span> <span class="string">&quot;git@github.com:digiprospector/digiprospector.github.io&quot;</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
-<h3 id="写blog"><a href="#写blog" class="headerlink" title="写blog"></a>写blog</h3><p>生成新的md文件</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post &quot;新文章的标题&quot;</span><br></pre></td></tr></table></figure>
-<p>用typora打开D:\study\program\blog\source\_posts下的md文件编辑</p>
-<p>本地看效果</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
-<p>打开浏览器 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a> 可以看到效果</p>
-<p>生成html和上传blog</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/21/article-title/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="桌上阳光">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="随堂小记">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/21/article-title/" class="post-title-link" itemprop="url">This is a beginning</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-12-21 09:56:09 / 修改时间：10:29:17" itemprop="dateCreated datePublished" datetime="2020-12-21T09:56:09+08:00">2020-12-21</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>No content yet.</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/21/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="桌上阳光">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="随堂小记">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/21/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-12-21 09:38:08" itemprop="dateCreated datePublished" datetime="2020-12-21T09:38:08+08:00">2020-12-21</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/1e5de19/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -615,7 +506,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -626,7 +517,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -655,7 +546,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-sun"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">桌上阳光</span>
 </div>

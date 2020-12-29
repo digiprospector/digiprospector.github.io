@@ -17,28 +17,28 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"digiprospector.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="目的这篇blog从比较宏观的角度来说明linux里的pinctrl的作用,不涉及代码细节. 什么是pin controllerpin controller是SOC上的一个硬件设备,用于控制CPU上的一些pin脚的功能,这些功能包括了GPIO的定义,比如上拉,下拉,open drain 还有把一些pin定义成一个group,实现一个接口,比如I2C接口需要4个pin,或者MMC接口 什么是pinct">
+  <meta name="description" content="目的这篇blog从比较宏观的角度来说明linux里的pinctrl的作用,不涉及代码细节.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pinctrl初探 (一)">
-<meta property="og:url" content="http://example.com/2020/12/23/Pinctrl%E5%88%9D%E6%8E%A2/index.html">
+<meta property="og:url" content="https://digiprospector.github.io/posts/413ee539/index.html">
 <meta property="og:site_name" content="随堂小记">
-<meta property="og:description" content="目的这篇blog从比较宏观的角度来说明linux里的pinctrl的作用,不涉及代码细节. 什么是pin controllerpin controller是SOC上的一个硬件设备,用于控制CPU上的一些pin脚的功能,这些功能包括了GPIO的定义,比如上拉,下拉,open drain 还有把一些pin定义成一个group,实现一个接口,比如I2C接口需要4个pin,或者MMC接口 什么是pinct">
+<meta property="og:description" content="目的这篇blog从比较宏观的角度来说明linux里的pinctrl的作用,不涉及代码细节.">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2020/12/23/Pinctrl初探/Snipaste_2020-12-23_13-39-46.png">
+<meta property="og:image" content="https://digiprospector.github.io/post/413ee539/Snipaste_2020-12-23_13-39-46.png">
 <meta property="article:published_time" content="2020-12-23T03:27:52.000Z">
-<meta property="article:modified_time" content="2020-12-24T05:28:31.915Z">
+<meta property="article:modified_time" content="2020-12-29T03:15:33.374Z">
 <meta property="article:author" content="桌上阳光">
 <meta property="article:tag" content="pinctrl">
 <meta property="article:tag" content="x86">
 <meta property="article:tag" content="denverton">
 <meta property="article:tag" content="driver">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2020/12/23/Pinctrl初探/Snipaste_2020-12-23_13-39-46.png">
+<meta name="twitter:image" content="https://digiprospector.github.io/post/413ee539/Snipaste_2020-12-23_13-39-46.png">
 
-<link rel="canonical" href="http://example.com/2020/12/23/Pinctrl%E5%88%9D%E6%8E%A2/">
+<link rel="canonical" href="https://digiprospector.github.io/posts/413ee539/">
 
 
 <script id="page-configurations">
@@ -156,7 +156,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/23/Pinctrl%E5%88%9D%E6%8E%A2/">
+    <link itemprop="mainEntityOfPage" href="https://digiprospector.github.io/posts/413ee539/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -186,7 +186,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-24 13:28:31" itemprop="dateModified" datetime="2020-12-24T13:28:31+08:00">2020-12-24</time>
+                <time title="修改时间：2020-12-29 11:15:33" itemprop="dateModified" datetime="2020-12-29T11:15:33+08:00">2020-12-29</time>
               </span>
 
           
@@ -201,6 +201,8 @@
 
       
         <h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>这篇blog从比较宏观的角度来说明linux里的pinctrl的作用,不涉及代码细节.</p>
+<a id="more"></a>
+
 <h2 id="什么是pin-controller"><a href="#什么是pin-controller" class="headerlink" title="什么是pin controller"></a>什么是pin controller</h2><p>pin controller是SOC上的一个硬件设备,用于控制CPU上的一些pin脚的功能,这些功能包括了GPIO的定义,比如上拉,下拉,open drain</p>
 <p>还有把一些pin定义成一个group,实现一个接口,比如I2C接口需要4个pin,或者MMC接口</p>
 <h2 id="什么是pinctrl"><a href="#什么是pinctrl" class="headerlink" title="什么是pinctrl"></a>什么是pinctrl</h2><p>pinctrl是linux kernel里的pin controller的抽象,目的是消除不同的SOC的pin的定义的差别,对上层提供统一的接口.</p>
@@ -208,7 +210,7 @@
 <p>和对这N个pin的操作函数.</p>
 <h2 id="Denverton的pin-controller有些什么功能"><a href="#Denverton的pin-controller有些什么功能" class="headerlink" title="Denverton的pin controller有些什么功能?"></a>Denverton的pin controller有些什么功能?</h2><p>Denverton的datasheet里的第26章和65章是关于GPIO PIN的register的描述.</p>
 <p>下面这张图说明了GPIO的逻辑,可以通过一些register的设定来修改pad的行为,可以改成Input, Output, Input的时候触发什么样的Interrupt等.</p>
-<p><img src="/2020/12/23/Pinctrl初探\Snipaste_2020-12-23_13-39-46.png" alt="Snipaste_2020-12-23_13-39-46"></p>
+<p><img src="/post/413ee539/Snipaste_2020-12-23_13-39-46.png" alt="Snipaste_2020-12-23_13-39-46"></p>
 <h2 id="Denverton的pinctrl代码"><a href="#Denverton的pinctrl代码" class="headerlink" title="Denverton的pinctrl代码"></a>Denverton的pinctrl代码</h2><p>Denverton的pinctrl就是把上面的逻辑图的配置,用软件实现,然后开放接口给上层软件使用,让上层软件可以修改pin的行为.</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义了154个pin,并且给每个pin一个名字,这个名字和datasheet里的是对应的</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">pinctrl_pin_desc</span> <span class="title">dnv_pins</span>[] =</span> &#123;</span><br><span class="line">    <span class="comment">/* North ALL */</span></span><br><span class="line">    PINCTRL_PIN(<span class="number">0</span>, <span class="string">&quot;GBE0_SDP0&quot;</span>),</span><br><span class="line">    PINCTRL_PIN(<span class="number">1</span>, <span class="string">&quot;GBE1_SDP0&quot;</span>),</span><br><span class="line">    PINCTRL_PIN(<span class="number">2</span>, <span class="string">&quot;GBE0_SDP1&quot;</span>),</span><br><span class="line">    PINCTRL_PIN(<span class="number">3</span>, <span class="string">&quot;GBE1_SDP1&quot;</span>),</span><br><span class="line">...</span><br><span class="line">    PINCTRL_PIN(<span class="number">150</span>, <span class="string">&quot;EMMC_D5&quot;</span>),</span><br><span class="line">    PINCTRL_PIN(<span class="number">151</span>, <span class="string">&quot;EMMC_D6&quot;</span>),</span><br><span class="line">    PINCTRL_PIN(<span class="number">152</span>, <span class="string">&quot;EMMC_D7&quot;</span>),</span><br><span class="line">    PINCTRL_PIN(<span class="number">153</span>, <span class="string">&quot;GPIO_3&quot;</span>),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义了几个组,分别组成了uart和emmc的pin</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> dnv_uart0_pins[] = &#123; <span class="number">60</span>, <span class="number">61</span>, <span class="number">64</span>, <span class="number">65</span> &#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> dnv_uart0_modes[] = &#123; <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span> &#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> dnv_uart1_pins[] = &#123; <span class="number">94</span>, <span class="number">95</span>, <span class="number">96</span>, <span class="number">97</span> &#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> dnv_uart2_pins[] = &#123; <span class="number">60</span>, <span class="number">61</span>, <span class="number">62</span>, <span class="number">63</span> &#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> dnv_uart2_modes[] = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span> &#125;;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">unsigned</span> <span class="keyword">int</span> dnv_emmc_pins[] = &#123;</span><br><span class="line">    <span class="number">142</span>, <span class="number">143</span>, <span class="number">144</span>, <span class="number">145</span>, <span class="number">146</span>, <span class="number">147</span>, <span class="number">148</span>, <span class="number">149</span>, <span class="number">150</span>, <span class="number">151</span>, <span class="number">152</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">intel_padgroup</span> <span class="title">dnv_north_gpps</span>[] =</span> &#123;</span><br><span class="line">    DNV_GPP(<span class="number">0</span>, <span class="number">0</span>, <span class="number">31</span>),  <span class="comment">/* North ALL_0 */</span></span><br><span class="line">    DNV_GPP(<span class="number">1</span>, <span class="number">32</span>, <span class="number">40</span>), <span class="comment">/* North ALL_1 */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">intel_padgroup</span> <span class="title">dnv_south_gpps</span>[] =</span> &#123;</span><br><span class="line">    DNV_GPP(<span class="number">0</span>, <span class="number">41</span>, <span class="number">58</span>), <span class="comment">/* South DFX */</span></span><br><span class="line">    DNV_GPP(<span class="number">1</span>, <span class="number">59</span>, <span class="number">90</span>), <span class="comment">/* South GPP0_0 */</span></span><br><span class="line">    DNV_GPP(<span class="number">2</span>, <span class="number">91</span>, <span class="number">111</span>),    <span class="comment">/* South GPP0_1 */</span></span><br><span class="line">    DNV_GPP(<span class="number">3</span>, <span class="number">112</span>, <span class="number">143</span>),   <span class="comment">/* South GPP1_0 */</span></span><br><span class="line">    DNV_GPP(<span class="number">4</span>, <span class="number">144</span>, <span class="number">153</span>),   <span class="comment">/* South GPP1_1 */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义了两个communities,我们看到上面的PIN是从0顺着下来的,这里为什么要分成communities</span></span><br><span class="line"><span class="comment">//community下面还有group?</span></span><br><span class="line"><span class="comment">//理由是按register来区分的,不同的community的register的base address不同</span></span><br><span class="line"><span class="comment">//不同的group的offset不同</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">intel_community</span> <span class="title">dnv_communities</span>[] =</span> &#123;</span><br><span class="line">    DNV_COMMUNITY(<span class="number">0</span>, <span class="number">0</span>, <span class="number">40</span>, dnv_north_gpps),</span><br><span class="line">    DNV_COMMUNITY(<span class="number">1</span>, <span class="number">41</span>, <span class="number">153</span>, dnv_south_gpps),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//定义了一个soc data,是intel pinctrl私有的,包含了所有的pin, </span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">intel_pinctrl_soc_data</span> <span class="title">dnv_soc_data</span> =</span> &#123;</span><br><span class="line">    .pins = dnv_pins,</span><br><span class="line">    .npins = ARRAY_SIZE(dnv_pins),</span><br><span class="line">    .groups = dnv_groups,</span><br><span class="line">    .ngroups = ARRAY_SIZE(dnv_groups),</span><br><span class="line">    .functions = dnv_functions,</span><br><span class="line">    .nfunctions = ARRAY_SIZE(dnv_functions),</span><br><span class="line">    .communities = dnv_communities,</span><br><span class="line">    .ncommunities = ARRAY_SIZE(dnv_communities),</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//如果acpi里的pinctrl的名字匹配,就用这个driver</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">acpi_device_id</span> <span class="title">dnv_pinctrl_acpi_match</span>[] =</span> &#123;</span><br><span class="line">    &#123; <span class="string">&quot;INTC3000&quot;</span> &#125;,</span><br><span class="line">    &#123; &#125;</span><br><span class="line">&#125;;</span><br><span class="line">MODULE_DEVICE_TABLE(acpi, dnv_pinctrl_acpi_match);</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用的intel通用的intel_pinctrl</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">dnv_pinctrl_probe</span><span class="params">(struct platform_device *pdev)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> intel_pinctrl_probe(pdev, &amp;dnv_soc_data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">struct</span> <span class="title">platform_driver</span> <span class="title">dnv_pinctrl_driver</span> =</span> &#123;</span><br><span class="line">    .probe = dnv_pinctrl_probe,</span><br><span class="line">    .driver = &#123;</span><br><span class="line">        .name = <span class="string">&quot;denverton-pinctrl&quot;</span>,</span><br><span class="line">        .acpi_match_table = dnv_pinctrl_acpi_match,</span><br><span class="line">        .pm = &amp;dnv_pinctrl_pm_ops,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h2 id="pinctl提供了什么"><a href="#pinctl提供了什么" class="headerlink" title="pinctl提供了什么?"></a>pinctl提供了什么?</h2><ol>
@@ -242,11 +244,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/12/21/%E5%A6%82%E4%BD%95%E7%94%A8hexo%E5%92%8Cgit%E5%BB%BA%E7%AB%8B%E4%B8%80%E4%B8%AAblog/" rel="prev" title="如何用hexo和github建立一个blog">
+    <a href="/posts/1e5de19/" rel="prev" title="如何用hexo和github建立一个blog">
       <i class="fa fa-chevron-left"></i> 如何用hexo和github建立一个blog
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/12/24/Pinctrl%E5%88%9D%E6%8E%A22/" rel="next" title="Pinctrl初探 (二)">
+    <a href="/posts/ee0f7e5b/" rel="next" title="Pinctrl初探 (二)">
       Pinctrl初探 (二) <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -322,7 +324,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -333,7 +335,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -362,7 +364,7 @@
   &copy; 
   <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
-    <i class="fa fa-heart"></i>
+    <i class="fa fa-sun"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">桌上阳光</span>
 </div>
@@ -431,7 +433,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'blog-comment',
       owner       : 'digiprospector',
       admin       : ['digiprospector'],
-      id          : '25744de3bd1045e6dfbb3326fc67a756',
+      id          : '6c671ebda00aadf976138927993f6152',
         language: 'zh-CN',
       distractionFreeMode: true
     });
