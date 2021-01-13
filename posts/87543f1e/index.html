@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"digiprospector.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="最近发现B站引进了小猪佩奇,但是第7季的后半部分几集要大会员才能看,那么怎么才能下载呢?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何下载B站大会员视频(半自动)">
+<meta property="og:url" content="https://digiprospector.github.io/posts/87543f1e/index.html">
+<meta property="og:site_name" content="随堂小记">
+<meta property="og:description" content="最近发现B站引进了小猪佩奇,但是第7季的后半部分几集要大会员才能看,那么怎么才能下载呢?">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-13T03:06:54.000Z">
+<meta property="article:modified_time" content="2021-01-13T03:46:34.054Z">
+<meta property="article:author" content="桌上阳光">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://digiprospector.github.io/posts/87543f1e/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>如何下载B站大会员视频(半自动) | 随堂小记</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">随堂小记</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://digiprospector.github.io/posts/87543f1e/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="桌上阳光">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="随堂小记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何下载B站大会员视频(半自动)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-01-13 11:06:54 / 修改时间：11:46:34" itemprop="dateCreated datePublished" datetime="2021-01-13T11:06:54+08:00">2021-01-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p> 最近发现B站引进了小猪佩奇,但是第7季的后半部分几集要大会员才能看,那么怎么才能下载呢?</p>
+<a id="more"></a>
+
+<h2 id="正确的方法"><a href="#正确的方法" class="headerlink" title="正确的方法"></a>正确的方法</h2><p>去B站买大会员,然后用you-get下载.</p>
+<p>参考:<a target="_blank" rel="noopener" href="https://www.cnblogs.com/santiego/p/12381658.html">https://www.cnblogs.com/santiego/p/12381658.html</a></p>
+<h2 id="不正确的方法"><a href="#不正确的方法" class="headerlink" title="不正确的方法"></a>不正确的方法</h2><h3 id="TamperMonkey脚本"><a href="#TamperMonkey脚本" class="headerlink" title="TamperMonkey脚本"></a>TamperMonkey脚本</h3><p>有一个TamperMonkey的脚本可以破解B站大会员 <a target="_blank" rel="noopener" href="https://greasyfork.org/zh-CN/scripts/407847-%E5%93%94%E5%93%A9%E5%93%94%E5%93%A9%E7%95%AA%E5%89%A7%E8%A7%A3%E9%94%81%E5%A4%A7%E4%BC%9A%E5%91%98-b%E7%AB%99%E8%A7%86%E9%A2%91%E4%B8%8B%E8%BD%BD-%E8%A7%A3%E6%9E%90-a%E7%AB%99%E8%A7%86%E9%A2%91%E4%B8%8B%E8%BD%BD-%E8%A7%A3%E6%9E%90-%E9%9B%86%E5%90%88%E4%BA%86%E4%BC%98%E9%85%B7-%E7%88%B1%E5%A5%87%E8%89%BA-%E8%85%BE%E8%AE%AF-%E8%8A%92%E6%9E%9C-%E4%B9%90%E8%A7%86-%E7%AD%89%E5%85%A8%E7%BD%91vip%E8%A7%86%E9%A2%91%E5%85%8D%E8%B4%B9%E7%A0%B4%E8%A7%A3%E5%8E%BB%E5%B9%BF%E5%91%8A-%E9%AB%98%E6%B8%85%E6%99%AE%E6%B8%85%E7%94%B5%E8%A7%86%E8%A7%82%E7%9C%8B-%E5%A2%9E%E5%8A%A0%E5%AF%B9%E6%89%8B%E6%9C%BA%E6%94%AF%E6%8C%81-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0">脚本在此</a> 用这个脚本可以看大会员的视频.</p>
+<p>但是如果你用F12打开控制台,想看他的脚本怎么转换得到视频的URL的时候,会发现很卡,应该是的脚本里加了loop,而且脚本也是加密的.</p>
+<p>那么想用python直接模拟browser/script的行为,得到视频的URL的方法就很费时间.</p>
+<p>我们可以用另外一个方法,还是使用这个脚本,但是我们吧URL的请求拦截下来.</p>
+<h3 id="mitmproxy"><a href="#mitmproxy" class="headerlink" title="mitmproxy"></a>mitmproxy</h3><p>mitm(Man-in-the-middle),中间人,就是说所有的请求就会经过这个proxy. 那么我们想要的视频URL也不会例外.</p>
+<p>mitm的安装就不详细说了,可以看 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/H4ck3R-XiX/p/12624072.html">这篇</a></p>
+<p>直接上脚本,脚本里用了tqdm这个库来显示进度条.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mitmproxy <span class="keyword">import</span> ctx, http</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BilibiliVip</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">request</span>(<span class="params">self, flow: http.HTTPFlow</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;bilivideo.com&#x27;</span> <span class="keyword">in</span> flow.request.host:</span><br><span class="line"></span><br><span class="line">            url = <span class="string">&#x27;&#123;&#125;://&#123;&#125;&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(flow.request.scheme, flow.request.host, flow.request.path)</span><br><span class="line">            fn = flow.request.path.split(<span class="string">r&#x27;/&#x27;</span>)[-<span class="number">1</span>].split(<span class="string">r&#x27;?&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">            r = requests.head(url, headers=flow.request.headers)</span><br><span class="line">            ctx.log.info(<span class="string">&#x27;download &#123;&#125; ,len &#123;&#125; bytes&#x27;</span>.<span class="built_in">format</span>(fn, r.headers[<span class="string">&#x27;content-length&#x27;</span>]))</span><br><span class="line">            progressbar = tqdm.tqdm(total=<span class="built_in">int</span>(r.headers[<span class="string">&#x27;content-length&#x27;</span>]), desc=fn, <span class="built_in">ascii</span>=<span class="string">&#x27; #&#x27;</span>, unit=<span class="string">&quot;B&quot;</span>, unit_scale=<span class="literal">True</span>, unit_divisor=<span class="number">1024</span>)</span><br><span class="line">            downloaded_bytes = <span class="number">0</span></span><br><span class="line">            r = requests.get(url, headers=flow.request.headers, stream=<span class="literal">True</span>)</span><br><span class="line">            <span class="keyword">with</span> <span class="built_in">open</span>(fn, <span class="string">&quot;wb&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                <span class="keyword">for</span> chunk <span class="keyword">in</span> r.iter_content(chunk_size=<span class="number">128</span>):</span><br><span class="line">                    f.write(chunk)</span><br><span class="line">                    downloaded_bytes += <span class="built_in">len</span>(chunk)</span><br><span class="line">                    progressbar.update(<span class="built_in">len</span>(chunk))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># change request path, we already get the file, no need to download it again</span></span><br><span class="line">            flow.request.path = <span class="string">&quot;notexist&quot;</span></span><br><span class="line"></span><br><span class="line">addons = [BilibiliVip()]</span><br></pre></td></tr></table></figure>
+<p>运行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mitmweb --listen-host &lt;your-ip&gt; --web-host &lt;your-ip&gt; -s bilibili_vip_addon.py</span><br></pre></td></tr></table></figure>
+<p>后来觉得直接在脚本里面下载很慢,不方便,就用aria2c来下载.</p>
+<p>aria2c的配置见 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/37021947">这里</a></p>
+<p>使用aria2c版的脚本如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mitmproxy <span class="keyword">import</span> ctx, http</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> tqdm</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> pyaria2 <span class="keyword">import</span> Aria2RPC</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BilibiliVip</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">request</span>(<span class="params">self, flow: http.HTTPFlow</span>):</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;bilivideo.com&#x27;</span> <span class="keyword">in</span> flow.request.host:</span><br><span class="line"></span><br><span class="line">            url = <span class="string">&#x27;&#123;&#125;://&#123;&#125;&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(flow.request.scheme, flow.request.host, flow.request.path)</span><br><span class="line">            fn = flow.request.path.split(<span class="string">r&#x27;/&#x27;</span>)[-<span class="number">1</span>].split(<span class="string">r&#x27;?&#x27;</span>)[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">            jsonrpc = Aria2RPC()</span><br><span class="line">            headers = []</span><br><span class="line">            <span class="keyword">for</span> key <span class="keyword">in</span> flow.request.headers:</span><br><span class="line">                headers.append(<span class="string">&quot;&#123;&#125;:&#123;&#125;&quot;</span>.<span class="built_in">format</span>(key, flow.request.headers[key]))</span><br><span class="line">            ctx.log.info(<span class="string">&#x27;headers &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(headers))</span><br><span class="line"></span><br><span class="line">            options = &#123;</span><br><span class="line">                <span class="string">&quot;out&quot;</span>: fn,</span><br><span class="line">                <span class="string">&quot;header&quot;</span>: headers</span><br><span class="line">                      &#125;</span><br><span class="line">            r = jsonrpc.addUri([url], options = options)</span><br><span class="line">            ctx.log.info(r)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># change request path, we already get the file, no need to download it again</span></span><br><span class="line">            flow.request.path = <span class="string">&quot;notexist&quot;</span></span><br><span class="line"></span><br><span class="line">addons = [BilibiliVip()]</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="改进"><a href="#改进" class="headerlink" title="改进"></a>改进</h2><p>这个方法还是需要手动点击浏览器才能下载视频,可能可以使用selenium模拟浏览器来做成全自动的吧.</p>
+<p>就暂时不研究了.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/posts/a4f3ee53/" rel="prev" title="启动的时候运行pipenv">
+      <i class="fa fa-chevron-left"></i> 启动的时候运行pipenv
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E7%A1%AE%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">正确的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E6%AD%A3%E7%A1%AE%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">不正确的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TamperMonkey%E8%84%9A%E6%9C%AC"><span class="nav-number">2.1.</span> <span class="nav-text">TamperMonkey脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mitmproxy"><span class="nav-number">2.2.</span> <span class="nav-text">mitmproxy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E8%BF%9B"><span class="nav-number">3.</span> <span class="nav-text">改进</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">桌上阳光</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-sun"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">桌上阳光</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '3601eab5a704fc321b2d',
+      clientSecret: '00a26a3c97650e81b2afe30aaa92497f346e54c2',
+      repo        : 'blog-comment',
+      owner       : 'digiprospector',
+      admin       : ['digiprospector'],
+      id          : 'b3edf67bbeba1324f2859e86eb9fe80a',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+</body>
+</html>
