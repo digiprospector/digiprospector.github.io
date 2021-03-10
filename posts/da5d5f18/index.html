@@ -20,22 +20,27 @@
     var CONFIG = {"hostname":"digiprospector.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="有一个使用了pipenv的python脚本，想要在开机的时候启动。">
+  <meta name="description" content="需求有一台电脑，有WIFI和ethernet，其中WIFI可以上网，现在希望ethernet上的其他设备可以通过WIFI上网。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="启动的时候运行pipenv">
-<meta property="og:url" content="https://digiprospector.github.io/posts/a4f3ee53/index.html">
+<meta property="og:title" content="hyper-v里运行openwrt">
+<meta property="og:url" content="https://digiprospector.github.io/posts/da5d5f18/index.html">
 <meta property="og:site_name" content="随堂小记">
-<meta property="og:description" content="有一个使用了pipenv的python脚本，想要在开机的时候启动。">
+<meta property="og:description" content="需求有一台电脑，有WIFI和ethernet，其中WIFI可以上网，现在希望ethernet上的其他设备可以通过WIFI上网。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-01-13T02:34:58.000Z">
-<meta property="article:modified_time" content="2021-01-13T02:43:47.341Z">
+<meta property="og:image" content="https://digiprospector.github.io/posts/da5d5f18/image-20210309171706573.png">
+<meta property="og:image" content="https://digiprospector.github.io/posts/da5d5f18/image-20210309172456599.png">
+<meta property="og:image" content="https://digiprospector.github.io/posts/da5d5f18/image-20210309172550830.png">
+<meta property="og:image" content="https://digiprospector.github.io/posts/da5d5f18/image-20210309172723230.png">
+<meta property="og:image" content="https://digiprospector.github.io/posts/da5d5f18/image-20210310100420120.png">
+<meta property="article:published_time" content="2021-03-09T09:09:19.000Z">
+<meta property="article:modified_time" content="2021-03-10T02:30:32.536Z">
 <meta property="article:author" content="桌上阳光">
-<meta property="article:tag" content="pipenv">
-<meta property="article:tag" content="python">
-<meta property="article:tag" content="rc.local">
+<meta property="article:tag" content="hyper-v">
+<meta property="article:tag" content="openwrt">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://digiprospector.github.io/posts/da5d5f18/image-20210309171706573.png">
 
-<link rel="canonical" href="https://digiprospector.github.io/posts/a4f3ee53/">
+<link rel="canonical" href="https://digiprospector.github.io/posts/da5d5f18/">
 
 
 <script id="page-configurations">
@@ -48,7 +53,7 @@
   };
 </script>
 
-  <title>启动的时候运行pipenv | 随堂小记</title>
+  <title>hyper-v里运行openwrt | 随堂小记</title>
   
 
 
@@ -153,7 +158,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://digiprospector.github.io/posts/a4f3ee53/">
+    <link itemprop="mainEntityOfPage" href="https://digiprospector.github.io/posts/da5d5f18/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -166,7 +171,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          启动的时候运行pipenv
+          hyper-v里运行openwrt
         </h1>
 
         <div class="post-meta">
@@ -175,10 +180,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-01-13 10:34:58 / 修改时间：10:43:47" itemprop="dateCreated datePublished" datetime="2021-01-13T10:34:58+08:00">2021-01-13</time>
+              <time title="创建时间：2021-03-09 17:09:19" itemprop="dateCreated datePublished" datetime="2021-03-09T17:09:19+08:00">2021-03-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-03-10 10:30:32" itemprop="dateModified" datetime="2021-03-10T10:30:32+08:00">2021-03-10</time>
+              </span>
 
           
 
@@ -191,13 +202,44 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>有一个使用了pipenv的python脚本，想要在开机的时候启动。</p>
+        <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>有一台电脑，有WIFI和ethernet，其中WIFI可以上网，现在希望ethernet上的其他设备可以通过WIFI上网。</p>
 <a id="more"></a>
 
-<h2 id="rc-local"><a href="#rc-local" class="headerlink" title="rc.local"></a>rc.local</h2><p>debian 10里rc.local已经没有了，都是使用的systemd，但是systemd复杂了点，还是想使用rc.local，比较简单。</p>
-<p>增加rc.local的支持，把rc.local加到systemd里去。运行下面的脚本。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"> </span><br><span class="line">echo &#x27;[Unit]</span><br><span class="line">Description=/etc/rc.local</span><br><span class="line">ConditionPathExists=/etc/rc.local</span><br><span class="line"> </span><br><span class="line">[Service]</span><br><span class="line">Type=forking</span><br><span class="line">ExecStart=/etc/rc.local start</span><br><span class="line">TimeoutSec=0</span><br><span class="line">StandardOutput=tty</span><br><span class="line">RemainAfterExit=yes</span><br><span class="line">SysVStartPriority=99</span><br><span class="line"> </span><br><span class="line">[Install]</span><br><span class="line">WantedBy=multi-user.target&#x27; &gt; /etc/systemd/system/rc-local.service</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">echo &#x27;#!/bin/sh -e</span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="bash"><span class="comment"># rc.local</span></span></span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="bash"><span class="comment"># This script is executed at the end of each multiuser runlevel.</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Make sure that the script will <span class="string">&quot;exit 0&quot;</span> on success or any other</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> value on error.</span></span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="bash"><span class="comment"># In order to enable or disable this script just change the execution</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> bits.</span></span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="bash"><span class="comment"># By default this script does nothing.</span></span></span><br><span class="line"> </span><br><span class="line">exit 0&#x27; &gt; /etc/rc.local</span><br><span class="line"> </span><br><span class="line">chmod +x /etc/rc.local</span><br><span class="line">systemctl enable rc-local</span><br></pre></td></tr></table></figure>
-<h2 id="rc-local的命令"><a href="#rc-local的命令" class="headerlink" title="rc.local的命令"></a>rc.local的命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su - username -c &quot;cd python_script_in_this_dir &amp;&amp; pipenv run python3 main.py&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="简单的方法"><a href="#简单的方法" class="headerlink" title="简单的方法"></a>简单的方法</h3><p>简单的方法就是使用internet共享，在wifi的网卡的属性里可以打开</p>
+<p><img src="/posts/da5d5f18/image-20210309171706573.png" alt="image-20210309171706573"></p>
+<h2 id="复杂的方法"><a href="#复杂的方法" class="headerlink" title="复杂的方法"></a>复杂的方法</h2><p>复杂的方法是在hyper-v里跑一个openwrt，让openwrt的wan bridge到WIFI, lan bridge到ethernet。这样的好处是openwrt可以跑各种插件，功能比较强大（然而并没有用到…</p>
+<h3 id="hyper-v的安装和配置"><a href="#hyper-v的安装和配置" class="headerlink" title="hyper-v的安装和配置"></a>hyper-v的安装和配置</h3><p>hyper-v的安装网上很多，就不细说了。</p>
+<p>配置的时候要建立两个bridge，分别绑定WIFI和ethernet。</p>
+<p>在hyper-v的管理工具选”虚拟交换机管理器”</p>
+<p><img src="/posts/da5d5f18/image-20210309172456599.png" alt="image-20210309172456599"></p>
+<p>新增一个外部虚拟交换机</p>
+<p><img src="/posts/da5d5f18/image-20210309172550830.png" alt="image-20210309172550830"></p>
+<p><img src="/posts/da5d5f18/image-20210309172723230.png" alt="image-20210309172723230"></p>
+<h3 id="下载openwrt"><a href="#下载openwrt" class="headerlink" title="下载openwrt"></a>下载openwrt</h3><p>下载最新版的openwrt，下面的19.07.7需要换成最新版本。或者可以去下载自己需要的image。</p>
+<p><a target="_blank" rel="noopener" href="https://downloads.openwrt.org/releases/19.07.7/targets/x86/64/">https://downloads.openwrt.org/releases/19.07.7/targets/x86/64/</a></p>
+<p>下载combined-ext4.img.gz</p>
+<p><img src="/posts/da5d5f18/image-20210310100420120.png" alt="image-20210310100420120"></p>
+<h3 id="制作hyper-v的硬盘"><a href="#制作hyper-v的硬盘" class="headerlink" title="制作hyper-v的硬盘"></a>制作hyper-v的硬盘</h3><p>下载的openwrt的image解压后是img格式的，我们要把它转换成hyper-v使用的。</p>
+<p>在这里下载</p>
+<p><a target="_blank" rel="noopener" href="https://www.starwindsoftware.com/tmplink/starwindconverter.exe">https://www.starwindsoftware.com/tmplink/starwindconverter.exe</a></p>
+<p>如果上面的地址不能用了，去下面的地址填信息，在邮箱里找到下载地址。</p>
+<p><a target="_blank" rel="noopener" href="https://www.starwindsoftware.com/starwind-v2v-converter#download">https://www.starwindsoftware.com/starwind-v2v-converter#download</a></p>
+<p>转换的过程</p>
+<p>第一步选”Local file”，再选择img文件。第二步还是选择”Local file”，格式选择第二种”VHD/VHDX”</p>
+<h3 id="创建hypver-v虚拟机"><a href="#创建hypver-v虚拟机" class="headerlink" title="创建hypver-v虚拟机"></a>创建hypver-v虚拟机</h3><p>“操作”-&gt;”新建”-&gt;”虚拟机”</p>
+<p>第一步，可以选择非C盘的位置来保存。</p>
+<p>第二步，选择第一代。</p>
+<p>第三步，内存，我填的128M，够用了。不要使用”动态内存”。</p>
+<p>第四步，选择LAN口的那个bridge，也就是ethernet的bridge。</p>
+<p>第五步，选择”使用现有虚拟硬盘”，然后选择上面生成的vhd文件。</p>
+<p>生产好了以后，选择这个虚拟机，然后选择”设置”。”添加硬件”，右边选”网络适配器”，把WAN口的bridge，也就是WIFI的bridge加进来。</p>
+<h3 id="配置openwrt"><a href="#配置openwrt" class="headerlink" title="配置openwrt"></a>配置openwrt</h3><p>等虚拟机启动以后，进console，用命令vi /etc/config/network编辑，WAN使用的是DHCP，LAN使用的是192.168.0.1。</p>
+<p>lan和wan的config 分别如下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">config interface &#39;lan&#39;</span><br><span class="line">        option type &#39;bridge&#39;</span><br><span class="line">        option ifname &#39;eth0&#39;</span><br><span class="line">        option proto &#39;static&#39;</span><br><span class="line">        option ipaddr &#39;192.168.0.1&#39;</span><br><span class="line">        option netmask &#39;255.255.255.0&#39;</span><br><span class="line">        option ip6assign &#39;60&#39;</span><br><span class="line"></span><br><span class="line">config interface &#39;wan&#39;</span><br><span class="line">        option ifname &#39;eth1&#39;</span><br><span class="line">        option proto &#39;dhcp&#39;</span><br></pre></td></tr></table></figure>
+
+
+
+
 
     </div>
 
@@ -207,9 +249,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/pipenv/" rel="tag"># pipenv</a>
-              <a href="/tags/python/" rel="tag"># python</a>
-              <a href="/tags/rc-local/" rel="tag"># rc.local</a>
+              <a href="/tags/hyper-v/" rel="tag"># hyper-v</a>
+              <a href="/tags/openwrt/" rel="tag"># openwrt</a>
           </div>
 
         
@@ -218,13 +259,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/posts/2bee804c/" rel="prev" title="Pinctrl初探 (三)">
-      <i class="fa fa-chevron-left"></i> Pinctrl初探 (三)
+    <a href="/posts/cfec52eb/" rel="prev" title="debian9 下安装 wordpress">
+      <i class="fa fa-chevron-left"></i> debian9 下安装 wordpress
     </a></div>
-      <div class="post-nav-item">
-    <a href="/posts/87543f1e/" rel="next" title="如何下载B站大会员视频(半自动)">
-      如何下载B站大会员视频(半自动) <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -284,7 +322,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#rc-local"><span class="nav-number">1.</span> <span class="nav-text">rc.local</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rc-local%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="nav-number">2.</span> <span class="nav-text">rc.local的命令</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82"><span class="nav-number">1.</span> <span class="nav-text">需求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">简单的方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">复杂的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hyper-v%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE"><span class="nav-number">2.1.</span> <span class="nav-text">hyper-v的安装和配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDopenwrt"><span class="nav-number">2.2.</span> <span class="nav-text">下载openwrt</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%B6%E4%BD%9Chyper-v%E7%9A%84%E7%A1%AC%E7%9B%98"><span class="nav-number">2.3.</span> <span class="nav-text">制作hyper-v的硬盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAhypver-v%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-number">2.4.</span> <span class="nav-text">创建hypver-v虚拟机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEopenwrt"><span class="nav-number">2.5.</span> <span class="nav-text">配置openwrt</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -407,7 +445,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'blog-comment',
       owner       : 'digiprospector',
       admin       : ['digiprospector'],
-      id          : '31a23bb4b700f21b9c66bde4da75d421',
+      id          : '5ccb3eabef7681443cb6d6cb9640b145',
         language: 'zh-CN',
       distractionFreeMode: true
     });
